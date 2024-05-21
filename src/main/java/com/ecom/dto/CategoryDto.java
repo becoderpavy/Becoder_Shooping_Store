@@ -1,5 +1,7 @@
 package com.ecom.dto;
 
+import java.util.List;
+
 import com.ecom.model.Category;
 
 import lombok.AllArgsConstructor;
@@ -31,4 +33,6 @@ public class CategoryDto extends BaseDto{
 	private Boolean isFeatures=false;
 
 	private String images;
+	
+	private List<ProductDto> products;
 }

@@ -3,7 +3,6 @@ package com.ecom.service;
 import java.util.List;
 
 import com.ecom.dto.CategoryDto;
-import com.ecom.exception.ResourceNotFoundException;
 
 public interface CategoryService {
 
@@ -15,7 +14,7 @@ public interface CategoryService {
 
 	public CategoryDto getCategoryById(Integer id);
 
-	public Boolean deleteCategory(Integer id);
+	public Boolean deleteCategory(Integer id) throws Exception;
 
 	public Boolean existCategory(String category);
 

@@ -2,6 +2,7 @@ package com.ecom.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.ecom.dto.CategoryDto;
 import com.ecom.exception.ExistResourceException;
 import com.ecom.exception.ResourceNotFoundException;
 import com.ecom.model.Category;
+import com.ecom.model.Product;
 import com.ecom.repository.CategoryRepository;
 import com.ecom.service.CategoryService;
 
@@ -111,8 +113,8 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public List<CategoryDto> getAllCategory() {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryRepository.findAll()
+				.stream().map(c -> mapper.map(c, CategoryDto.class)).toList();
 	}
 
 	@Override
@@ -122,9 +124,25 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Boolean deleteCategory(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean deleteCategory(Integer id) throws Exception {
+		Boolean f = false;
+		Category category = categoryRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Category not found with=" + id));
+
+//		List<Product> products = category.getProducts();
+//		
+//		Product product = products.stream().filter(p->p.getId().equals(1)).findAny().orElse(null);
+//		
+//		category.getProducts().remove(product);
+//		
+//		category.getProducts().clear();
+
+		if (!ObjectUtils.isEmpty(category)) {
+			categoryRepository.delete(category);
+			f = true;
+		}
+
+		return f;
 	}
 
 	@Override

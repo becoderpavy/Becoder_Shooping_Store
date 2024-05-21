@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FileServiceImpl implements FileService {
 
 	@Override
-	public Boolean uploadFile(MultipartFile file, String path) {
+	public String uploadFile(MultipartFile file, String path) {
 
 		try {
 			String originalFilename = file.getOriginalFilename();
@@ -38,12 +38,12 @@ public class FileServiceImpl implements FileService {
 			}
 
 			Files.copy(file.getInputStream(), Paths.get(storePath));
-			log.info("Image Store Path : {}",Paths.get(storePath));
-			return true;
+			log.info("Image Store Path : {}", Paths.get(storePath));
+			return fullFileName;
 		} catch (Exception e) {
 			log.error("Error : {}", e.getMessage());
 		}
-		return false;
+		return null;
 	}
 
 }
